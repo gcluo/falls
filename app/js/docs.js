@@ -4,7 +4,7 @@
   /* code here! */
 
   // window.console.log = function(){};
-  // var falls = new Falls();
+  var falls = new Falls();
   var tpl = tpl || document.getElementById('tpl').innerHTML;
   document.getElementById('tpl').remove();
   var html = _.template(tpl);
@@ -28,69 +28,70 @@
 
 
 
-  // window.onload = function(){   
-  //   falls.init();
-  // }
+  window.onload = function(){   
+    falls.init();
+  }
 
-  // window.onscroll = function(){
-  //   if(falls.checkScroll()){
-  //      // falls.container.innerHTML += html(data);
-  //   }
-  // }
+  window.onscroll = function(){
+    if(falls.checkScroll()){
+       falls.container.innerHTML += html(list);
+       falls.sortIMG();
+    }
+  }
 
-  // function Falls(){
-  // 	this.container = document.getElementById('falls');
-  // 	this.boxs = this.container.children;
-  // 	this.IMGWIDTH = this.boxs[0].offsetWidth;
-  // 	this.columns = Math.floor(document.documentElement.clientWidth / this.IMGWIDTH);
-  // 	this.columnsHeight = [];
-  // 	this.lastsortImg = this.columns;
-  // 	this.setContainerWidth=function(){
-  // 		this.container.style.width = this.IMGWIDTH * this.columns + "px";
-  // 	};
-  // 	this.getColumnsHeight=function(){
-	 //  	for(var i = 0;i < this.columns;i ++){
-	 //  		this.columnsHeight[i] = this.boxs[i].offsetHeight;
-	 //  		console.log(this.boxs[i].offsetHeight);
-	 //  	}
-	 //  	console.log(this.columnsHeight);
-	 //  };
-  // 	this.getMinHeightIndex=function(columnsHeight,minColHeight){
-	 //  	for(var i in columnsHeight){
-	 //  		if(columnsHeight[i] === minColHeight){
-	 //  			return i;
-	 //  		}
-	 //  	}
-	 //  };
-  // 	this.sortIMG=function(){
-	 //  	for(var i = this.lastsortImg;i < this.boxs.length; i ++){
-	 //  		var minColHeight = Math.min.apply(null,this.columnsHeight);
-	 //  		console.log(minColHeight);
-	 //  		var minColIndex = this.getMinHeightIndex(this.columnsHeight,minColHeight);
-	 //  		console.log(minColIndex);
-	 //  		var minColWidth = minColIndex * this.IMGWIDTH;
-	 //  		this.boxs[i].style.position = "absolute";
-	 //  		this.boxs[i].style.top = minColHeight + "px";
-	 //  		this.boxs[i].style.left = minColWidth + "px";
-	 //  		this.columnsHeight[minColIndex] += this.boxs[i].offsetHeight;
-	 //  		console.log(this.columnsHeight[minColIndex]);
-	 //  		this.lastsortImg = i;
-	 //  	}
-	 //  };
-  //   this.checkScroll = function(){
-  //     var lastTop = this.boxs[this.boxs.length - 1].offsetTop;
-  //     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-  //     var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
-  //     if(lastTop < scrollTop + clientHeight){
-  //       return true;
-  //     }
-  //   };
-  //   this.init = function(){
-  //     this.setContainerWidth();
-  //     this.getColumnsHeight();
-  //     this.sortIMG();
-  //   };
-  // }
+  function Falls(){
+  	this.container = document.getElementById('falls');
+  	this.boxs = this.container.children;
+  	this.IMGWIDTH = this.boxs[0].offsetWidth;
+  	this.columns = Math.floor(document.documentElement.clientWidth / this.IMGWIDTH);
+  	this.columnsHeight = [];
+  	this.lastsortImg = this.columns;
+  	this.setContainerWidth=function(){
+  		this.container.style.width = this.IMGWIDTH * this.columns + "px";
+  	};
+  	this.getColumnsHeight=function(){
+	  	for(var i = 0;i < this.columns;i ++){
+	  		this.columnsHeight[i] = this.boxs[i].offsetHeight;
+	  		console.log(this.boxs[i].offsetHeight);
+	  	}
+	  	console.log(this.columnsHeight);
+	  };
+  	this.getMinHeightIndex=function(columnsHeight,minColHeight){
+	  	for(var i in columnsHeight){
+	  		if(columnsHeight[i] === minColHeight){
+	  			return i;
+	  		}
+	  	}
+	  };
+  	this.sortIMG=function(){
+	  	for(var i = this.lastsortImg + 1;i < this.boxs.length; i ++){
+	  		var minColHeight = Math.min.apply(null,this.columnsHeight);
+	  		console.log(minColHeight);
+	  		var minColIndex = this.getMinHeightIndex(this.columnsHeight,minColHeight);
+	  		console.log(minColIndex);
+	  		var minColWidth = minColIndex * this.IMGWIDTH;
+	  		this.boxs[i].style.position = "absolute";
+	  		this.boxs[i].style.top = minColHeight + "px";
+	  		this.boxs[i].style.left = minColWidth + "px";
+	  		this.columnsHeight[minColIndex] += this.boxs[i].offsetHeight;
+	  		console.log(this.columnsHeight[minColIndex]);
+	  		this.lastsortImg = i;
+	  	}
+	  };
+    this.checkScroll = function(){
+      var lastTop = this.boxs[this.boxs.length - 1].offsetTop;
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      if(lastTop < scrollTop + clientHeight){
+        return true;
+      }
+    };
+    this.init = function(){
+      this.setContainerWidth();
+      this.getColumnsHeight();
+      this.sortIMG();
+    };
+  }
 
   
 
